@@ -16,6 +16,7 @@ type IoUringSqe_Union1 uint64
 
 func (u *IoUringSqe_Union1) SetOffset(v uint64) { *u = IoUringSqe_Union1(v) }
 func (u *IoUringSqe_Union1) SetAddr2(v uint64)  { *u = IoUringSqe_Union1(v) }
+func (u *IoUringSqe_Union1) SetCmdOp(v uintptr) { *u = IoUringSqe_Union1(v) }
 
 type IoUringSqe_Union2 uint64
 
@@ -41,6 +42,7 @@ func (u *IoUringSqe_Union3) SetRenameFlags(v uint32)    { *u = IoUringSqe_Union3
 func (u *IoUringSqe_Union3) SetUnlinkFlags(v uint32)    { *u = IoUringSqe_Union3(v) }
 func (u *IoUringSqe_Union3) SetHardlinkFlags(v uint32)  { *u = IoUringSqe_Union3(v) }
 func (u *IoUringSqe_Union3) SetXattrFlags(v uint32)     { *u = IoUringSqe_Union3(v) }
+func (u *IoUringSqe_Union3) SetMsgRingFlags(v uint32)   { *u = IoUringSqe_Union3(v) } //generic
 func (u *IoUringSqe_Union3) SetOpFlags(v uint32)        { *u = IoUringSqe_Union3(v) } //generic
 func (u IoUringSqe_Union3) GetOpFlags() uint32          { return uint32(u) }          //generic
 
@@ -53,6 +55,11 @@ type IoUringSqe_Union5 uint32
 
 func (u *IoUringSqe_Union5) SetSpliceFdIn(v int32) { *u = IoUringSqe_Union5(v) }
 func (u *IoUringSqe_Union5) SetFileIndex(v uint32) { *u = IoUringSqe_Union5(v) }
+
+type IoUringSqe_Union6 struct {
+	Addr3 uint64
+	Cmd   unsafe.Pointer
+}
 
 type IoUringSqe struct {
 	Opcode IoUringOp /* type of operation for this sqe */
@@ -115,8 +122,9 @@ type IoUringSqe struct {
 	//  };
 	IoUringSqe_Union5
 
-	Addr3  uint64
-	__pad2 [1]uint64
+	//Addr3  uint64
+	//__pad2 [1]uint64
+	IoUringSqe_Union6
 }
 
 /*

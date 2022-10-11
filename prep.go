@@ -19,7 +19,7 @@ func PrepRW(op IoUringOp, sqe *IoUringSqe, fd int,
 	sqe.Personality = 0
 	sqe.IoUringSqe_Union5 = 0 // sqe.SetFileIndex(0) // union5
 	sqe.Addr3 = 0
-	sqe.__pad2[0] = 0
+	//sqe.__pad2[0] = 0
 }
 
 func PrepNop(sqe *IoUringSqe) {
