@@ -22,6 +22,7 @@ func main() {
 
 	submitted, err := h.SubmitAndWait(1)
 	if err != nil { /*...*/
+		log.Fatal(err)
 	}
 	println(submitted) // 1
 
@@ -30,6 +31,8 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	} // check also EINTR
+
+	log.Println(cqe)
 
 	_ = cqe.UserData
 	_ = cqe.Res

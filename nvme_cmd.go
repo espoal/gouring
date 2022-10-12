@@ -34,7 +34,7 @@ type NvmeUringCmd struct {
 	Cdw2        uint32
 	Cdw3        uint32
 	Metadata    uint64
-	Addr        uint64
+	Addr        uintptr
 	MetadataLen uint32
 	DataLen     uint32
 	Cdw10       uint32
