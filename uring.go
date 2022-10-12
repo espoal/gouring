@@ -1,8 +1,11 @@
 package gouring
 
+import "log"
+
 func New(entries uint32, flags uint32) (*IoUring, error) {
 	ring := &IoUring{}
 	p := new(IoUringParams)
+	log.Printf("Flags: %b", flags)
 	p.Flags = flags
 	err := io_uring_queue_init_params(entries, ring, p)
 	if err != nil {

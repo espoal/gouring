@@ -10,7 +10,7 @@ func main() {
 
 	h, err := gouring.New(256, 0)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("error creating:", err)
 	}
 	defer h.Close()
 
@@ -23,14 +23,14 @@ func main() {
 
 	submitted, err := h.SubmitAndWait(1)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("Error submitting: ", err)
 	}
 	println(submitted) // 1
 
 	var cqe *gouring.IoUringCqe
 	err = h.WaitCqe(&cqe)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("Error waiting:", err)
 	} // check also EINTR
 
 	log.Println("CQE: ", cqe)
