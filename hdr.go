@@ -196,8 +196,8 @@ const IORING_SETUP_COOP_TASKRUN = (1 << 8)
  */
 const IORING_SETUP_TASKRUN_FLAG = (1 << 9)
 
-const IORING_SETUP_SQE128 = uint32(1 << 10) /* SQEs are 128 byte */
-const IORING_SETUP_CQE32 = uint32(1 << 11)  /* CQEs are 32 byte */
+const IORING_SETUP_SQE128 = 1 << 10 /* SQEs are 128 byte */
+const IORING_SETUP_CQE32 = 1 << 11  /* CQEs are 32 byte */
 
 type IoUringOp = uint8
 
