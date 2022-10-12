@@ -45,7 +45,9 @@ func main() {
 	blockNumber := uint64(8484884820919)
 	nblocks := uint32(1)
 
-	h, err := gouring.New(256, gouring.IORING_SETUP_IOPOLL)
+	h, err := gouring.New(256, gouring.IORING_SETUP_IOPOLL|
+		// Error setting up ring: Bad file descriptor
+		gouring.IORING_SETUP_SQE128|gouring.IORING_SETUP_CQE32)
 	if err != nil {
 		log.Fatal("Error setting up ring: ", err)
 	}
