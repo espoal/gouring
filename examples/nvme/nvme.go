@@ -79,7 +79,7 @@ func main() {
 	cmd.Addr = uintptr(unsafe.Pointer(&b[0]))
 	cmd.DataLen = 4096
 
-	// Does this makes sense?
+	// This is wrong!!
 	sqe.Cmd = unsafe.Pointer(&cmd)
 
 	submitted, err := h.SubmitAndWait(1)
