@@ -41,6 +41,7 @@ func NVME_URING_CMD_IO() uintptr {
 
 func main() {
 
+	// Run with sudo to access the device
 	devPath := "/dev/nvme0n1"
 	blockNumber := uint64(8484884820919)
 	nblocks := uint32(1)
@@ -53,7 +54,7 @@ func main() {
 	}
 	defer h.Close()
 
-	fd, err := unix.Open(devPath, unix.O_RDONLY, 0677)
+	fd, err := unix.Open(devPath, unix.O_RDONLY, 0666)
 	if err != nil {
 		log.Fatal("Error opening device:", err)
 	}
@@ -61,7 +62,7 @@ func main() {
 	sqe := h.GetSqe()
 	b := make([]byte, 4096)
 	gouring.PrepRead(sqe, fd, &b[0], len(b), 0)
-	log.Println("Buffer: ", b)
+	//log.Println("Buffer: ", b)
 
 	sqe.IoUringSqe_Union1.SetCmdOp(NVME_URING_CMD_IO())
 	sqe.Opcode = gouring.IORING_OP_URING_CMD
@@ -71,7 +72,7 @@ func main() {
 	var cmd gouring.NvmeUringCmd
 	cmd.Opcode = gouring.NVME_CMD_READ
 	//cmd.Addr
-	cmd.Nsid = 2 // TODO: find nsid
+	cmd.Nsid = 1 // TODO: find nsid
 	cmd.Cdw10 = uint32(blockNumber & 0xffffffff)
 	cmd.Cdw11 = uint32(blockNumber >> 32)
 	cmd.Cdw12 = nblocks
@@ -94,7 +95,7 @@ func main() {
 	} // check also EINTR
 
 	log.Println("CQE: ", cqe)
-	log.Println("Buffer: ", b)
+	//log.Println("Buffer: ", b)
 	log.Println("Buffer: ", string(b))
 
 }
